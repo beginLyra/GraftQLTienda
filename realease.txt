@@ -1,0 +1,17 @@
+
+docker graft build --platform linux/amd64 -t syacgraft-dev:latest . --load
+
+docker run -d -p 8000:8000 --name my-ui-container --env-file .env syacgraft-dev:latest
+
+az login
+
+az acr login --name acr2acsydev
+
+
+docker tag syacgraft-dev:latest acr2acsydev.azurecr.io/acsy/graft:latest
+docker tag syacgraft-dev:latest acr2acsydev.azurecr.io/syacgraft-dev:0.0.3
+
+
+
+docker push acr2acsydev.azurecr.io/acsy/graft:latest
+docker push acr2acsydev.azurecr.io/syacgraft-dev:0.0.3
